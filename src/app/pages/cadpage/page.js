@@ -1,17 +1,24 @@
 "use client";
+
 import React, { useState } from 'react';
 import './Styles.css';
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      setError('As senhas não coincidem');
+      return;
+    }
+
     try {
-      const response = await fetch('../../api/login', { // Ajuste o caminho da API se necessário
+      const response = await fetch('../../api/register', { // Ajuste o caminho da API se necessário
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -20,12 +27,12 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Erro ao fazer login');
+        throw new Error('Erro ao registrar usuário');
       }
 
       const data = await response.json();
-      console.log('Usuário autenticado com sucesso:', data);
-      // Aqui você pode redirecionar o usuário ou armazenar o token JWT no localStorage
+      console.log('Usuário registrado com sucesso:', data);
+      // Aqui você pode redirecionar ou mostrar uma mensagem de sucesso
 
     } catch (error) {
       console.error(error);
@@ -39,11 +46,10 @@ const Login = () => {
         <div className="flex flex-col items-center mb-6">
           <img src="/logo2.png" alt="Logo" className="w-40" />
         </div>
-
+        
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit}>
-          {/* Campo de Email */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
@@ -58,7 +64,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Campo de Senha */}
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Senha
@@ -73,7 +78,20 @@ const Login = () => {
             />
           </div>
 
-          {/* Checkbox e Link "Esqueceu a senha?" */}
+          <div className="mb-4">
+            <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
+              Confirmar senha
+            </label>
+            <input
+              type="password"
+              id="confirm-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="****"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+            />
+          </div>
+
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
               <input
@@ -93,12 +111,11 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Botão de Login */}
           <button
             type="submit"
             className="w-full py-2 px-4 bg-green-600 text-white font-medium rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           >
-            Login
+            Registrar-se
           </button>
         </form>
       </div>
@@ -106,4 +123,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
