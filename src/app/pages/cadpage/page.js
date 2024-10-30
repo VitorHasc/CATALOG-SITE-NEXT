@@ -18,18 +18,16 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch('../../api/register', { // Ajuste o caminho da API se necessário
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
-
       if (!response.ok) {
         throw new Error('Erro ao registrar usuário');
       }
-
       const data = await response.json();
       console.log('Usuário registrado com sucesso:', data);
       // Aqui você pode redirecionar ou mostrar uma mensagem de sucesso

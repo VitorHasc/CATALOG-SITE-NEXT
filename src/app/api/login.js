@@ -19,14 +19,12 @@ export default async function handler(req, res) {
       }
 
       // Comparar a senha
-      const isMatch = await compare(password, user.password); // Certifique-se de que `user.password` esteja armazenado como hash
+      const isMatch = await compare(password, user.password);
 
       if (!isMatch) {
         return res.status(401).json({ message: 'Senha incorreta' });
       }
 
-      // Se tudo estiver correto, você pode gerar um token JWT ou retornar os dados do usuário
-      // Aqui está um exemplo de retorno do usuário, sem token para simplificação
       res.status(200).json({ message: 'Login bem-sucedido', user: { email: user.email } });
 
     } catch (error) {
