@@ -87,19 +87,8 @@ const Register = () => {
           </div>
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
-              <input
-                id="remember"
-                type="checkbox"
-                className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-              />
-              <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
-                Lembre-me
-              </label>
             </div>
             <div className="text-sm">
-              <a href="#" className="font-medium text-green-600 hover:text-green-500">
-                Esqueceu sua senha?
-              </a>
             </div>
           </div>
           <button

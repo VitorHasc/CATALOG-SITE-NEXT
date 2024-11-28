@@ -32,6 +32,7 @@ export async function POST(req) {
       }
     );
   } catch (error) {
+    console.log(error)
     return new Response(
       JSON.stringify({ message: "Erro ao criar usuário", error: error.message }),
       {
