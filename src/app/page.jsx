@@ -11,7 +11,32 @@ const Login = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    router.push('pages/home');
+    
+    // Resetar o erro antes de enviar a requisição
+    setError(null);
+
+    try {
+      // Enviar a requisição de login para a API
+      const response = await fetch('/api/login', { // Supondo que a API de login esteja em /api/login
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Login bem-sucedido, redirecionar para a página principal
+        router.push('/pages/home');
+      } else {
+        // Exibir erro
+        setError(data.message || 'Erro ao fazer login');
+      }
+    } catch (error) {
+      setError('Erro ao fazer login');
+    }
   };
 
   const handleSignupRedirect = () => {

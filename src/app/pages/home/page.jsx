@@ -24,7 +24,7 @@ const Home = () => {
       title: 'Apartamento tal 1', 
       location: '225, Montenegro', 
       price: 'R$00000', 
-      beds: '4', 
+      beds: '4',
       baths: 'Banheiros',
       img: 'path/to/image1.jpg'
     },
