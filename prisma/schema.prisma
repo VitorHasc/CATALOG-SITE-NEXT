@@ -14,7 +14,39 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
+  idUser   Int      @id @default(autoincrement())
   email    String   @unique
   password String
+  role     Role     @default(USER)
+  
+  Imoveis  Imovel[] 
+}
+
+model Imovel {
+  idImovel    Int      @id @default(autoincrement())
+  nome        String
+  descricao   String
+  preco       Float
+  idUser      Int
+  idEndereco  Int
+
+  User        User      @relation(fields: [idUser], references: [idUser])
+  Endereco    Endereco  []
+}
+
+model Endereco {
+  idEndereco Int      @id @default(autoincrement())
+  idImovel   Int
+  cidade     String
+  bairro     String
+  rua        String
+  numero     String
+
+  Imovel   Imovel     @relation(fields: [idImovel], references: [idImovel])
+}
+
+enum Role {
+  USER       
+  EMPREGADO  
+  ADM       
 }

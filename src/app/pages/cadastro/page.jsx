@@ -33,7 +33,7 @@ const Register = () => {
       }, 1000);
     } catch (error) {
       console.error(error);
-      setError('Erro ao se comunicar com o servidor');
+      setError('Email já existente');
     }
   };
   

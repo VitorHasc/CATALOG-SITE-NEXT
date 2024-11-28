@@ -1,7 +1,11 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 const prisma = new PrismaClient();
+const JWT_SECRET = "seu-segredo-seguro"; 
 
 export async function POST(req) {
   try {
@@ -9,6 +13,7 @@ export async function POST(req) {
     const user = await prisma.user.findUnique({
       where: { email },
     });
+
     if (!user) {
       return new Response(
         JSON.stringify({ message: "Usuário não encontrado" }),
@@ -20,7 +25,8 @@ export async function POST(req) {
         }
       );
     }
-    if (password !== user.password) {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
       return new Response(
         JSON.stringify({ message: "Credenciais inválidas" }),
         {
@@ -31,8 +37,18 @@ export async function POST(req) {
         }
       );
     }
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, {
+      expiresIn: "7d", 
+    });
     return new Response(
-      JSON.stringify({ message: "Login bem-sucedido", user }),
+      JSON.stringify({
+        message: "Login bem-sucedido",
+        user: {
+          id: user.id,
+          email: user.email,
+        },
+        token,
+      }),
       {
         status: 200,
         headers: {

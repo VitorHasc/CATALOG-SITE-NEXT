@@ -1,26 +1,34 @@
 "use client";
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importando o hook useRouter
-import './globals.css';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import "./globals.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false); 
   const [error, setError] = useState(null);
-  const router = useRouter(); // Inicializando o hook useRouter
-  
+  const [isLoading, setIsLoading] = useState(true); 
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      router.push("/pages/home");
+    } else {
+      setIsLoading(false);
+    }
+  }, [router]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Resetar o erro antes de enviar a requisição
     setError(null);
 
     try {
-      // Enviar a requisição de login para a API
-      const response = await fetch('/api/login', { // Supondo que a API de login esteja em /api/login
-        method: 'POST',
+      const response = await fetch("/api/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
@@ -28,20 +36,29 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Login bem-sucedido, redirecionar para a página principal
-        router.push('/pages/home');
+        if (rememberMe) {
+          localStorage.setItem("token", data.token);
+        }
+        router.push("/pages/home");
       } else {
-        // Exibir erro
-        setError(data.message || 'Erro ao fazer login');
+        setError(data.message || "Erro ao fazer login");
       }
     } catch (error) {
-      setError('Erro ao fazer login');
+      setError("Erro ao fazer login");
     }
   };
 
   const handleSignupRedirect = () => {
-    router.push('/pages/cadastro');
+    router.push("/pages/cadastro");
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p>Carregando...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -53,7 +70,6 @@ const Login = () => {
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit}>
-          {/* Campo de Email */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
@@ -68,7 +84,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Campo de Senha */}
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Senha
@@ -83,16 +98,17 @@ const Login = () => {
             />
           </div>
 
-          {/* Checkbox e Link "Esqueceu a senha?" */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
               <input
                 id="remember"
                 type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
                 className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
               />
               <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
-                Lembre-me
+                Lembrar de mim
               </label>
             </div>
 
@@ -100,14 +116,13 @@ const Login = () => {
               <a
                 href="#"
                 className="font-medium text-green-600 hover:text-green-500"
-                onClick={handleSignupRedirect} // Ao clicar, redireciona para a página de cadastro
+                onClick={handleSignupRedirect}
               >
                 Cadastre-se
               </a>
             </div>
           </div>
 
-          {/* Botão de Login */}
           <button
             type="submit"
             className="w-full py-2 px-4 bg-green-600 text-white font-medium rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
