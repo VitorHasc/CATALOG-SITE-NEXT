@@ -43,8 +43,8 @@ export async function POST(req) {
             }
         );
     } catch (error) {
-        return new Response(
-            JSON.stringify({ message: "Erro ao criar imóvel", error: error.message }),
+        return new Response( 
+            JSON.stringify({ message: "Erro ao criar imóvel.", error: error.message }),
             {
                 status: 500,
                 headers: {
