@@ -34,7 +34,7 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log(response);
+      console.log(response); 
       if (response.ok) {
         if (rememberMe) {
           localStorage.setItem("token", data.token);
