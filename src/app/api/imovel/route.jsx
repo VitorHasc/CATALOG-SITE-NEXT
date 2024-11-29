@@ -1,11 +1,39 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";  // Certifique-se de instalar o jsonwebtoken
 
 const prisma = new PrismaClient();
 
+const SECRET_KEY = process.env.SECRET;  // Certifique-se de definir sua chave secreta no .env
+
+// Função para verificar se o usuário tem a role apropriada
+async function verifyUserRole(token) {
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        const user = await prisma.user.findUnique({
+            where: { idUser: decoded.idUser },
+        });
+
+        if (!user) throw new Error("Usuário não encontrado");
+
+        if (user.role !== "ADM" && user.role !== "EMPREGADO") {
+            throw new Error("Permissão negada");
+        }
+
+        return user; 
+    } catch (error) {
+        throw new Error("Token inválido ou expirado");
+    }
+}
+
 export async function POST(req) {
     try {
+        const token = req.headers.get("Authorization")?.split(" ")[1];
+        if (!token) throw new Error("Token não fornecido");
+
+        await verifyUserRole(token);
+
         const { nome, descricao, preco, idUser, cidade, bairro, rua, numero } = await req.json();
 
         const imovel = await prisma.imovel.create({
@@ -92,6 +120,11 @@ export async function GET(req) {
 
 export async function DELETE(req) {
     try {
+        const token = req.headers.get("Authorization")?.split(" ")[1];
+        if (!token) throw new Error("Token não fornecido");
+
+        await verifyUserRole(token);  // Verifica se o usuário tem a permissão necessária
+
         const { idImovel } = await req.json();
 
         const deletedImovel = await prisma.imovel.delete({
@@ -129,6 +162,11 @@ export async function DELETE(req) {
 
 export async function PUT(req) {
     try {
+        const token = req.headers.get("Authorization")?.split(" ")[1];
+        if (!token) throw new Error("Token não fornecido");
+
+        await verifyUserRole(token); 
+
         const { idImovel, nome, descricao, preco, cidade, bairro, rua, numero } = await req.json();
 
         const updatedImovel = await prisma.imovel.update({
@@ -137,7 +175,7 @@ export async function PUT(req) {
                 nome,
                 descricao,
                 preco,
-                cidade,  // Campos de endereço diretamente no imóvel
+                cidade, 
                 bairro,
                 rua,
                 numero,
