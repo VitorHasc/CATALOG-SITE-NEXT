@@ -7,6 +7,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'USER',
+    "numero" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("idUser")
 );

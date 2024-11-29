@@ -2,10 +2,9 @@
 
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { signToken } from "../APIfun";
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.SECRET;
 
 export async function POST(req) {
   try {
@@ -13,33 +12,14 @@ export async function POST(req) {
     const user = await prisma.user.findUnique({
       where: { email },
     });
-
-    if (!user) {
-      return new Response(
-        JSON.stringify({ message: "Usuário não encontrado" }),
-        {
-          status: 404,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
+    console.log(user);
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return new Response(
         JSON.stringify({ message: "Credenciais inválidas" }),
-        {
-          status: 401,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
       );
     }
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, {
-      expiresIn: "7d", 
-    });
+    const token = signToken({ id: user.idUser });
     return new Response(
       JSON.stringify({
         message: "Login bem-sucedido",
@@ -59,12 +39,6 @@ export async function POST(req) {
   } catch (error) {
     return new Response(
       JSON.stringify({ message: "Erro ao realizar login", error: error.message }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
     );
   }
 }
