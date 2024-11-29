@@ -13,7 +13,6 @@ export async function POST(req) {
       data: {
         email,
         password: hashedPassword,
-        role: "ADM"
       },
     });
 

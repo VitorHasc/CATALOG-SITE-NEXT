@@ -33,6 +33,7 @@ model Imovel {
   bairro      String
   rua         String
   numero      String
+  imageP      String
 
   User        User      @relation(fields: [idUser], references: [idUser])
 }
