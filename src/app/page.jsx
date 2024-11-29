@@ -44,7 +44,7 @@ const Login = () => {
         setError(data.message || "Erro ao fazer login");
       }
     } catch (error) {
-      setError("Erro ao fazer login");
+      setError("Erro ao fazer login"); 
     }
   };
 
