@@ -9,10 +9,25 @@ export async function POST(req) {
         const token = req.headers.get("Authorization");
         const role = await verifyUserRole(token);
         const idUser = await verifyToken(token);
-        if (role == "EMPREGADO" || "ADM") {
-            const { nome, descricao, preco, cidade, bairro, rua, numero } = await req.json();
+        if (role == "EMPREGADO" || role == "ADM") {
+            let { nome, descricao, preco, cidade, bairro, rua, numero, tipo, quartos, imageP } = await req.json();
+            if (!imageP){
+                imageP = "";
+            }
             const imovel = await prisma.imovel.create({
-                data: { nome, descricao, preco, idUser, cidade, bairro, rua, numero },
+                data: { 
+                    nome, 
+                    descricao, 
+                    preco, 
+                    idUser, 
+                    cidade, 
+                    bairro, 
+                    rua, 
+                    numero, 
+                    tipo,
+                    quartos,
+                    imageP
+                },
             });
             return new Response(
                 JSON.stringify({
@@ -25,6 +40,7 @@ export async function POST(req) {
     } catch (error) {
         return new Response(
             JSON.stringify({ message: "Erro ao criar imóvel.", error: error.message }),
+            { status: 500, headers: { "Content-Type": "application/json" } }
         );
     }
 }
