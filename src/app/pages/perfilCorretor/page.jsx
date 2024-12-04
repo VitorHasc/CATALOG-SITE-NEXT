@@ -1,13 +1,25 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from 'next/router';
 
 const PerfilCorretor = () => {
-    const router = useRouter();
-    const { idUser } = router.query; // Obtém o idUser da URL
+    const [isClient, setIsClient] = useState(false);  // Para verificar se é o cliente
     const [corretor, setCorretor] = useState(null);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
+
+    useEffect(() => {
+        setIsClient(true);  // Define que o componente foi montado no cliente
+    }, []);
+
+    // Se não estiver no cliente, não renderiza nada
+    if (!isClient) {
+        return null;
+    }
+
+    const { idUser } = router.query; // Obtém o idUser da URL
 
     useEffect(() => {
         if (!idUser) return; // Evita chamar a API se idUser não estiver disponível ainda
