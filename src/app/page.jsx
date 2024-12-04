@@ -35,7 +35,12 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log(response); 
+      console.log(response);
+      console.log(data.user.role) 
+      const role = data.user.role;
+      localStorage.setItem('userRole', role);
+      console.log(role);
+
       if (response.ok) {
         if (rememberMe) {
           localStorage.setItem("token", data.token);

@@ -17,6 +17,167 @@
 .card:hover {
   transform: scale(1.05);
 }
+.perfil-corretor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.banner {
+  position: relative;
+  width: 100%;
+  height: 200px;
+
+  border-radius: 10px;
+}
+
+.foto-perfil {
+  position: absolute;
+  bottom: -40px;
+  left: 20px;
+  width: 80px;
+  height: 80px;
+  background-color: #ddd;
+  border: 4px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foto-perfil img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.info-corretor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+  text-align: center;
+  padding: 30px;
+}
+
+.info-corretor h1 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.info-corretor p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.botao-editar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background-color: #efefef;
+  color: #333;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.botao-editar:hover {
+  background-color: #ddd;
+}
+
+.imoveis-cadastrados {
+  margin-top: 20px;
+}
+
+.imoveis-cadastrados h2 {
+  font-size: 1.6rem;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.botao-cadastrar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 15px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.botao-cadastrar:hover {
+  background-color: #45a049;
+}
+
+.lista-imoveis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card-imovel {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 30px ;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-imovel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-imovel img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-imovel .info {
+  padding: 15px;
+}
+
+.card-imovel h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0 0 10px;
+}
+
+.card-imovel p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 5px 0;
+}
+
+.card-imovel .preco {
+  font-size: 1rem;
+  color: #e74c3c;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+
 
 @tailwind base;
 @tailwind components;

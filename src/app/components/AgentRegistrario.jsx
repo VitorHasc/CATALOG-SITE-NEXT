@@ -74,9 +74,13 @@ export default function AgentRegistrario() {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/empregado/${id}`, {
-        headers: { 'Authorization': token }
+      
+      // Realizando a requisição DELETE enviando o ID no corpo (body)
+      await axios.delete('/api/empregado', {
+        headers: { 'Authorization': token },
+        data: { idUser: id }, // Aqui você passa o ID no corpo
       });
+  
       setSuccess('Corretor excluído com sucesso!');
       fetchAgents();
     } catch (err) {

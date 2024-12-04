@@ -9,8 +9,9 @@ export async function POST(req) {
     try {
         const token = req.headers.get("Authorization");
         const role = await verifyUserRole(token);
-
+        console.log("OPA OPA OPA1");
         if (role == "ADM") { 
+            console.log("EPA EPA EPA1")
             const { email, password, numero } = await req.json();
 
             const hashedPassword = await bcrypt.hash(password, 10);

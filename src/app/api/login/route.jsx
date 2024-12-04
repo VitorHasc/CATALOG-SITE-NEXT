@@ -26,6 +26,7 @@ export async function POST(req) {
         user: {
           id: user.id,
           email: user.email,
+          role: user.role,
         },
         token,
       }),
