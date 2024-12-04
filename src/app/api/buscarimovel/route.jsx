@@ -108,6 +108,7 @@ export async function POST(req) {
         }
 
         if (imoveis.length === 0) {
+            console.log("teste")
             imoveis = await prisma.imovel.findMany();
             return new Response(
                 JSON.stringify({
@@ -124,7 +125,7 @@ export async function POST(req) {
         );
     } catch (error) {
         return new Response(
-            JSON.stringify({ message: "Erro ao buscar imóveis", error: error.message }),
+            JSON.stringify({ message: "Erro ao buscar imóveis", error: error }),
             { status: 500, headers: { "Content-Type": "application/json" } }
         );
     }
