@@ -1,13 +1,16 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from 'next/router';
 
-const PerfilCorretor = ({ idUser }) => {
+const PerfilCorretor = () => {
+    const router = useRouter();
+    const { idUser } = router.query; // Obtém o idUser da URL
     const [corretor, setCorretor] = useState(null);
     const [loading, setLoading] = useState(true);
-    idUser = 1;
+
     useEffect(() => {
+        if (!idUser) return; // Evita chamar a API se idUser não estiver disponível ainda
+
         const fetchCorretor = async () => {
             try {
                 const response = await axios.get(`/api/empregado?idUser=${idUser}`);
