@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios"; // Importando axios
 import Header2 from "../../components/header2";
-import Footer from "../../components/Footer";
+import Footer from "../../components/footer";
 
 export default function CatalogoPage() {
     const [searchTerm, setSearchTerm] = useState("");
