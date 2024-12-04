@@ -5,28 +5,23 @@ import axios from "axios";
 import { useRouter } from 'next/router';
 
 const PerfilCorretor = () => {
-    const [isClient, setIsClient] = useState(false);  // Para verificar se é o cliente
     const [corretor, setCorretor] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isClient, setIsClient] = useState(false);  // Estado para verificar se está no cliente
     const router = useRouter();
 
+    // Definir que está no cliente após o primeiro render
     useEffect(() => {
-        setIsClient(true);  // Define que o componente foi montado no cliente
+        setIsClient(true); 
     }, []);
 
-    // Se não estiver no cliente, não renderiza nada
-    if (!isClient) {
-        return null;
-    }
-
-    const { idUser } = router.query; // Obtém o idUser da URL
-
+    // Espera o idUser da URL ser carregado para buscar os dados
     useEffect(() => {
-        if (!idUser) return; // Evita chamar a API se idUser não estiver disponível ainda
+        if (!isClient || !router.query.idUser) return;  // Espera o cliente estar montado e idUser disponível
 
         const fetchCorretor = async () => {
             try {
-                const response = await axios.get(`/api/empregado?idUser=${idUser}`);
+                const response = await axios.get(`/api/empregado?idUser=${router.query.idUser}`);
                 setCorretor(response.data);
             } catch (error) {
                 console.error("Erro ao buscar corretor:", error);
@@ -36,7 +31,7 @@ const PerfilCorretor = () => {
         };
 
         fetchCorretor();
-    }, [idUser]);
+    }, [isClient, router.query.idUser]);  // Dependências atualizadas para quando idUser ou cliente mudarem
 
     if (loading) return <p>Carregando...</p>;
 
