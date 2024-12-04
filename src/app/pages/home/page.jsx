@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "../../components/Header";
+import Header from "../../components/header";
 
 const Card = ({ title, location, price, beds, baths, img }) => {
   return (
