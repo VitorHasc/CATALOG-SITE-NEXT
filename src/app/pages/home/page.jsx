@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Header from '@/app/components/Header';
+import Header from '../../components/Header';
 
 const Card = ({ title, location, price, beds, baths, img }) => {
   return (

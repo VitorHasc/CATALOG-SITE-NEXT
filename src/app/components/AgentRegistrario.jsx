@@ -21,24 +21,21 @@ export default function AgentRegistrario() {
   }, []);
 
   const fetchAgents = async () => {
-
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get('/api/listarEmpregados', {
         headers: { 'Authorization': token }
-      }); 
-      setAgents(response.data);
+      });
+      setAgents(response.data.empregados); // Ajuste aqui para acessar 'empregados'
     } catch (err) {
       setError('Erro ao carregar corretores');
     }
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      console.log(token + "aaaaaa");
       if (editMode) {
         await axios.put(`/api/empregado/${editId}`, agent, {
           headers: {
@@ -48,8 +45,6 @@ export default function AgentRegistrario() {
         });
         setSuccess('Corretor atualizado com sucesso!');
       } else {
-        console.log("CRASH")
-        console.log(agent)
         await axios.post('/api/empregado', agent, {
           headers: {
             'Authorization': token,

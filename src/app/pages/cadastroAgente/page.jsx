@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import AgentRegistrario from '@/app/components/AgentRegistrario'
+import AgentRegistrario from '../../components/AgentRegistrario'
 import Header2 from '../../components/header2';
 
 export default function RegisterAgentPage() {
