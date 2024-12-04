@@ -13,12 +13,14 @@ export async function POST(req) {
         if (role === "EMPREGADO" || role === "ADM") {
             const { idImovel } = await req.json();
 
-            const existingFavorite = await prisma.favorito.findFirst({
-                where: {
-                    idUser,
-                    idImovel
-                }
-            });
+            const existingFavorite = await prisma.favorito.findUnique({
+              where: {
+                  idUser_idImovel: { // Usa a chave composta idUser_idImovel
+                      idUser,
+                      idImovel
+                  }
+              }
+          });
 
             if (existingFavorite) {
                 return new Response(
@@ -39,7 +41,7 @@ export async function POST(req) {
             return new Response(
                 JSON.stringify({
                     message: "Imóvel adicionado aos favoritos com sucesso.",
-                    favorito,
+                    favorito, 
                 }),
                 { status: 201, headers: { "Content-Type": "application/json" } }
             );

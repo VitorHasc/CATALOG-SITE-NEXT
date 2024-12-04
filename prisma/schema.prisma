@@ -21,6 +21,7 @@ model User {
   numero   String?
 
   Imoveis  Imovel[]
+  Favoritos Favorito[]  
 }
 
 model Imovel {
@@ -38,12 +39,23 @@ model Imovel {
   quartos     Int
 
   User        User      @relation(fields: [idUser], references: [idUser])
+  Favoritos   Favorito[]  
 }
 
+model Favorito {
+  idFavorito  Int      @id @default(autoincrement())
+  idUser      Int
+  idImovel    Int
+
+  User        User     @relation(fields: [idUser], references: [idUser])
+  Imovel      Imovel   @relation(fields: [idImovel], references: [idImovel])
+
+  @@unique([idUser, idImovel])
+}
 
 enum Role {
-  USER       
-  EMPREGADO  
+  USER
+  EMPREGADO
   ADM
 }
 
