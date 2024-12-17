@@ -1,6 +1,6 @@
 # Sistema de Imóveis - Next.js
 
-Este projeto é uma aplicação desenvolvida com **Next.js** que simula um sistema de gestão de imóveis. Ele permite:
+Este projeto é uma aplicação desenvolvida com **Next.js** que possui as funcionalidades de um sistema de gestão de imóveis. Ele permite:
 
 - **Filtros de pesquisa** avançados para encontrar imóveis rapidamente.  
 - **Cadastro e gerenciamento** de imóveis.  
