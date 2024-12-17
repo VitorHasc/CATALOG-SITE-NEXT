@@ -18,6 +18,6 @@ Este projeto é uma aplicação fullstack em grupo desenvolvida com **Next.js** 
 
 3. Acesse a aplicação no navegador em: http://localhost:3000
 
-A plataforma também está diponível em https://vercel.com/vitorhascs-projects/catalog-site-next/AhGBUJYB7kqwsTybCYa1m57s5PER
+A plataforma também está diponível em [https://vercel.com/vitorhascs-projects/catalog-site-next/AhGBUJYB7kqwsTybCYa1m57s5PER](https://catalog-site-next-8xqorbf01-vitorhascs-projects.vercel.app/)
 
 Além disso a plataforma utiliza um banco de dados Postgre hospedado no Neon, e é manipulado através do ORM prisma.
